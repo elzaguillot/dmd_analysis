@@ -1,0 +1,17 @@
+[project]
+name = "dmd-paper"
+version = "0.1.0"
+description = "Analysis code for Guillot et al., dynamic gene regulatory network in Duchenne muscular dystrophy initiation"
+requires-python = ">=3.12"
+dependencies = [
+    "anndata",
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "scanpy",
+    "scipy",
+    "scvelo",
+]
+
+[tool.uv]
+package = false

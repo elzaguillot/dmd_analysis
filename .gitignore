@@ -218,3 +218,32 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Reference material used to build this repository (not versioned)
+bioinfo_alignment/
+bioinfo_analysis/
+bioinfo_pipeline/
+sources/
+claude.md
+Proteomic_data/
+half_life/
+scranseq*
+dmd_manip3_analysis.py
+
+# Inputs and outputs of the scripts: only the starting data and the final tables are versioned
+data/**
+!data/**/
+!data/half_life/kallisto/*/abundance.tsv
+!data/proteomics/Proteomic_result.csv
+!data/reference/Homo_sapiens.GRCh38.cdna.all.fa
+!data/scrnaseq/1-all_Velocyto.h5ad
+results/**
+!results/**/
+!results/half_life/*.csv
+!results/proteomics/*.csv
+!results/scrnaseq1/*.csv
+!results/scrnaseq1/scrnaseq1_preprocessed.h5ad
+
+# Local settings
+.claude/settings.local.json
+.DS_Store
