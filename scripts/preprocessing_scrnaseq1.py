@@ -6,7 +6,7 @@ computes QC metrics, removes ribosomal genes and MALAT1, then filters genes and 
 counts with scvelo, as in the original pipeline (output identical to 3-all_Velocyto.h5ad).
 
 Usage:
-    python scripts/preprocessing_scrnaseq1.py --input data/scrnaseq/1-all_Velocyto.h5ad --out results/scrnaseq1
+    python scripts/preprocessing_s  crnaseq1.py --input data/scrnaseq/1-all_Velocyto.h5ad --out results/scrnaseq1
 """
 
 import argparse
@@ -32,7 +32,6 @@ POOL_THRESHOLDS = {"0": {"log10_umi": 3.9, "genes": 3800}, "1": {"log10_umi": 3.
 # non-ribosomal genes (RPS6K* kinases, RPS19BP1, antisense transcripts such as RPL34-AS1)
 RIBO_PREFIXES = ("RPS", "RPL", "MRPS", "MRPL")
 OTHER_REMOVED_GENES = ["MALAT1"]
-MIN_SHARED_COUNTS = 1  # gene kept if detected spliced and unspliced in the same cell at least once
 
 
 def quality_metrics(adata: ad.AnnData):
@@ -94,7 +93,7 @@ def normalise(adata: ad.AnnData) -> ad.AnnData:
     adata = adata[:, ~removed].copy()
     adata.layers["raw_spliced"] = adata.layers["spliced"].copy()
     adata.X = adata.layers["spliced"].astype("float32")
-    scv.pp.filter_and_normalize(adata, min_shared_counts=MIN_SHARED_COUNTS, layers_normalize="spliced")
+    scv.pp.filter_and_normalize(adata, min_shared_counts=1, layers_normalize="spliced")
     adata.X = adata.layers["spliced"].copy()
     return adata
 
