@@ -7,7 +7,9 @@ estimate the mRNA degradation rate d0 (h^-1) and half-life ln(2) / d0.
 
 Usage:
     python scripts/half_life.py --kallisto-dir data/half_life/kallisto \
-        --fasta data/reference/Homo_sapiens.GRCh38.cdna.all.fa --out results/half_life
+        --fasta data/reference/Homo_sapiens.GRCh38.cdna.all.fa.gz --out results/half_life
+
+The FASTA is downloaded with `sh scripts/download_reference.sh`.
 """
 
 import argparse
@@ -182,7 +184,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--kallisto-dir", type=Path, default=REPO_DIR / "data/half_life/kallisto")
     parser.add_argument("--tr2g", type=Path, default=REPO_DIR / "resources/tr2g_kallisto_index.csv.gz")
-    parser.add_argument("--fasta", type=Path, default=REPO_DIR / "data/reference/Homo_sapiens.GRCh38.cdna.all.fa")
+    parser.add_argument("--fasta", type=Path, default=REPO_DIR / "data/reference/Homo_sapiens.GRCh38.cdna.all.fa.gz")
     parser.add_argument("--out", type=Path, default=REPO_DIR / "results/half_life")
     args = parser.parse_args()
 
@@ -195,6 +197,8 @@ def main():
     tpm.to_csv(args.out / "tpm_per_gene.csv")
     print(f"TPM table: {tpm.shape[0]} genes x {tpm.shape[1]} samples")
 
+    if not args.fasta.exists():
+        parser.error(f"{args.fasta} not found, download it with: sh scripts/download_reference.sh")
     symbols = read_gene_symbols(args.fasta)
     d0_table = compute_d0_table(tpm, symbols)
     d0_table.to_csv(args.out / "d0_per_gene.csv")

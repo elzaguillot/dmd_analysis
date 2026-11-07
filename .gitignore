@@ -235,7 +235,6 @@ data/**
 !data/**/
 !data/half_life/kallisto/*/abundance.tsv
 !data/proteomics/Proteomic_result.csv
-!data/reference/Homo_sapiens.GRCh38.cdna.all.fa
 !data/scrnaseq/1-all_Velocyto.h5ad
 results/**
 !results/**/

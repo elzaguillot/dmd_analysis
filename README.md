@@ -32,7 +32,7 @@ Datasets are deposited on ArrayExpress (E-MTAB-16077, E-MTAB-16083). Scripts rea
 ```
 data/
 ├── half_life/kallisto/{D5,D7,D9}_T{0..4}/abundance.tsv   kallisto output per sample
-├── reference/Homo_sapiens.GRCh38.cdna.all.fa              Ensembl cDNA FASTA, for gene symbols
+├── reference/Homo_sapiens.GRCh38.cdna.all.fa.gz           Ensembl cDNA FASTA, for gene symbols (downloaded)
 ├── proteomics/Proteomic_result.csv                        EDyP protein group export
 └── scrnaseq/1-all_Velocyto.h5ad                           10x pools after CellRanger, HTO and velocyto
 ```
@@ -42,7 +42,8 @@ data/
 UC3-4 cells, actinomycin D (10 µg/mL) at day 5, 7 and 9 of differentiation, collected 0 to 4 h after
 treatment (15 samples).
 
-Upstream, per sample (fastp, then kallisto 0.46.0 on an Ensembl GRCh38 cDNA index of 190,522 transcripts):
+Upstream, per sample (fastp, then kallisto 0.46.0 on an index of the Ensembl release 100 GRCh38
+cDNA, 190,522 transcripts):
 
 ```bash
 fastp -i R1.fastq.gz -I R2.fastq.gz -o R1.fastq -O R2.fastq --detect_adapter_for_pe -q 30 -c
@@ -50,6 +51,7 @@ kallisto quant -i Homo_sapiens.GRCh38.cdna.index.idx -o kallisto/D5_T0 -b 100 R1
 ```
 
 ```bash
+sh scripts/download_reference.sh
 uv run python scripts/half_life.py
 ```
 
